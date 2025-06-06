@@ -34,31 +34,30 @@ export default function BudgetScreen() {
   const handleContinue = () => {
     if (selectedBudget) {
       // Seçilen bütçeyi formatla
-      let budgetText = '';
+      let budgetValue = '';
       
       switch(selectedBudget) {
         case 'economy':
-          budgetText = 'Ucuz - Ekonomik';
+          budgetValue = 'Ucuz';
           break;
         case 'moderate':
-          budgetText = 'Orta - Standart';
+          budgetValue = 'Orta';
           break;
         case 'luxury':
-          budgetText = 'Lüks - Premium';
+          budgetValue = 'Lüks';
           break;
         default:
-          budgetText = selectedBudget;
+          budgetValue = selectedBudget;
       }
       
-      // Özet sayfasına yönlendir
+      // AI plan sayfasına yönlendir - seyahat planı oluşturma akışı için
       router.push({
-        pathname: '/(trip)/summary',
+        pathname: '/(trip)/ai-plan',
         params: { 
           destination, 
           travelers, 
-          startDate,
-          endDate,
-          budget: budgetText
+          dates: `${startDate ? new Date(startDate).toLocaleDateString('tr-TR') : ''} - ${endDate ? new Date(endDate).toLocaleDateString('tr-TR') : ''}`,
+          budget: budgetValue
         }
       });
     }

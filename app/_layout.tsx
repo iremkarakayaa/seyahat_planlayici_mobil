@@ -3,28 +3,31 @@ import { Stack, Tabs } from "expo-router";
 import { useColorScheme } from 'react-native';
 import Colors from '../constants/Colors';
 import { TripsProvider } from '../context/TripsContext';
+import { AuthProvider } from '../hooks/useAuth';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme() || 'light';
   const colors = Colors[colorScheme];
   
   return (
-    <TripsProvider>
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: colorScheme === 'dark' ? colors.background : '#f8f8f8',
-          },
-          headerTintColor: colorScheme === 'dark' ? colors.text : '#000',
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(trip)" options={{ headerShown: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-      </Stack>
-    </TripsProvider>
+    <AuthProvider>
+      <TripsProvider>
+        <Stack
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: colorScheme === 'dark' ? colors.background : '#f8f8f8',
+            },
+            headerTintColor: colorScheme === 'dark' ? colors.text : '#000',
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(trip)" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+        </Stack>
+      </TripsProvider>
+    </AuthProvider>
   );
 }
 
